@@ -49,7 +49,7 @@ influxdb3 create trigger \
 influxdb3 enable trigger --database mydb wal_alert
 ```
 
-#### 3. Test it (update)
+#### 2. Test it
 ```bash
 influxdb3 test wal_plugin \
   --lp "weather,location=us-midwest temperature=90i 1678886400000000000" \
@@ -57,3 +57,6 @@ influxdb3 test wal_plugin \
   --database mydb \
   sms-alert.py
 ```
+
+![SMS Alert Screenshot](./sms-screenshot.png)
+
