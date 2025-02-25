@@ -18,7 +18,7 @@ influxdb3 create database <database_name>
 
 ## **Setting Up the Trigger**
 
-Once the database is created, set up the trigger with the following command:
+Once the database is created, set up the trigger with the following command:(Make sure to include the table for which you want to collect the statistics in **--trigger-spec** and **--trigger-arguments**)
 
 ```bash
 influxdb3 create trigger \
