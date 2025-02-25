@@ -58,5 +58,5 @@ influxdb3 test wal_plugin \
   sms-alert.py
 ```
 
-![SMS Alert Screenshot](./sms-screenshot.png)
+![SMS Alert Screenshot](./screenshot.png)
 
