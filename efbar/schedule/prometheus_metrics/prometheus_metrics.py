@@ -17,8 +17,12 @@ def collect_metrics(influxdb3_local, hostname, ip_address, port, path):
 
       name = '{0}'.format(*sample)
       tag = '{1}'.format(*sample)
-      value = float('{2}'.format(*sample))
+      val = '{2}'.format(*sample)
 
+      if val in ['nan','NaN','+inf','+Inf','-inf','-Inf']:
+        continue
+
+      value = float(val)
       tag_dict = ast.literal_eval(tag)
 
       line = LineBuilder(name)\
