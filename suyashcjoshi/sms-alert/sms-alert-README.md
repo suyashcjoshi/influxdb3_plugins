@@ -8,7 +8,7 @@ This plugin sends SMS/WhatsApp alerts via Twilio based on for any given threshol
 *   A Twilio account with an active phone number (free trial)
 *   Phone number that recieves text message and/or WhatsApp message (Whatsapp is optional)
 *   The `twilio` Python library installed (`influxdb3 install package twilio`).
-*   The `python-dotenv` library installed (`influxdb3 install package python-dotenv`) - *Required for development using a `.env` file*.
+*   The `python-dotenv` library installed (`influxdb3 install package python-dotenv`) - *Required for `.env` file*.
 
 ## Installation
 
