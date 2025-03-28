@@ -91,7 +91,7 @@ inflxudb3 disable trigger --databse prophet peyton_forecast
 #### Plugin 3: Visualize Forecast via HTTP
 ```bash 
 influxdb3 create trigger \
-  --trigger-spec "path:plot_forecast" \
+  --trigger-spec "request:plot_forecast" \
   --plugin-filename "plot_forecast_http.py" \
   --database prophet \
   forecast_plot
