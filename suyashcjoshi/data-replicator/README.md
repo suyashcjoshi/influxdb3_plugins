@@ -58,7 +58,7 @@ influxdb3 create trigger \
   -d mydb \
   --plugin-filename data-replicator.py \
   --trigger-spec "all_tables" \
-  --trigger-arguments "host=https://eu-central-1-1.aws.cloud2.influxdata.com,token=YOUR_TOKEN,database=mydb,aggregate_interval=1m,validate=true" \
+  --trigger-arguments "host=YOUR_HOST_URL,token=YOUR_TOKEN,database=mydb,aggregate_interval=1m,validate=true" \
   --error-behavior retry \
   data_replicator_trigger
 ```
@@ -114,7 +114,7 @@ influxdb3 create trigger \
   -d mydb \
   --plugin-filename data-replicator.py \
   --trigger-spec "all_tables" \
-  --trigger-arguments "host=https://eu-central-1-1.aws.cloud2.influxdata.com,token=YOUR_TOKEN,database=mydb,tables=cpu,aggregate_interval=1m" \
+  --trigger-arguments "host=YOUR_HOST_URL,token=YOUR_TOKEN,database=mydb,tables=cpu,aggregate_interval=1m" \
   --error-behavior retry \
   data_replicator_trigger
 influxdb3 enable trigger --database mydb data_replicator_trigger
