@@ -40,7 +40,7 @@ This plugin replicates **any/all data** written to an InfluxDB 3 Core/Enterprise
 ### 2. Download & Install InfluxDB 3 python module used by plugin 
 
 ```bash
-influxdb3 install influxdb3-python
+influxdb3 install package influxdb3-python
 ```
 
 ### 3. Download & Install [Telegraf](https://docs.influxdata.com/telegraf/v1/install/) (optional)
