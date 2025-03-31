@@ -85,12 +85,12 @@ influxdb3 enable trigger --database mydb data_replicator_trigger
 ```bash
 rm ~/.plugins/edr_queue.jsonl.gz
 ```
-**Stop & Re-run Telegraf for 1 min**
+**Run Telegraf** (Stop and run if already running)
 
 ```bash
 telegraf --config telegraf.conf
 ```
-Stop after 1 minute: Ctrl + C
+**Run Telegraf for atleast 1 Minute**: Stop after using Ctrl + C
 
 **Query Local InfluxDB 3 Instance**: Run SQL query using influxdb3 cli
 
@@ -107,7 +107,11 @@ SELECT * FROM cpu WHERE cpu = 'cpu-total' AND time >= NOW() - 5m LIMIT 2
 
 #### Use Case 2: Data Replication With Downsampling
 
-**Update Trigger Creation** Enable downsampling by providing aggregate_interval=1m argument
+**Clear local queue**
+```bash
+rm ~/.plugins/edr_queue.jsonl.gz
+```
+**Create/Recreate Trigger** Enable downsampling by providing aggregate_interval=1m argument
 
 ```bash
 influxdb3 create trigger \
@@ -117,19 +121,16 @@ influxdb3 create trigger \
   --trigger-arguments "host=YOUR_HOST_URL,token=YOUR_TOKEN,database=mydb,tables=cpu,aggregate_interval=1m" \
   --error-behavior retry \
   data_replicator_trigger
+```
+**Enable Trigger**
+```
 influxdb3 enable trigger --database mydb data_replicator_trigger
 ```
-
-**Clear local queue**
-```bash
-rm ~/.plugins/edr_queue.jsonl.gz
-```
 **Stop & Restart Telegraf**
-``bash
+```bash
 telegraf --config telegraf.conf
 ```
-
-**Run for 2 Minutes**: Ensure data spans at least one 1-minute bucket.
+**Run Telegraf for atleast 2 Minutes**: Stop after using Ctrl + C
 
 **Query Local Instance (No downsampling locally)**
 ```bash
