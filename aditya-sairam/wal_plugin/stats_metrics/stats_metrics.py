@@ -1,5 +1,23 @@
 import datetime
 from collections import defaultdict
+import pandas as pd
+from pydantic import BaseModel
+from typing import List
+import redis 
+
+analytics_data = []  # Global storage for analytics
+
+import pandas as pd
+
+
+
+redis_client = redis.Redis(host="host.docker.internal", port=6379, decode_responses=True)
+analytics_data = [] 
+
+
+def save_to_redis(df, table_name,database_name):
+    redis_key = f"{database_name}:{table_name}"  # Key format
+    redis_client.set(redis_key, df.to_json(orient="records"))  # Store as JSON
 
 def calculate_median(values):
     sorted_values = sorted(values)
@@ -40,14 +58,12 @@ def parse_time_sampling(time_sampling):
 def parse_timestamp(time_value):
     """Parse a timestamp (ISO string, Unix timestamp in seconds/milliseconds/nanoseconds) into a datetime object."""
     if isinstance(time_value, str):
-        # Assume ISO format
         return datetime.datetime.fromisoformat(time_value)
     elif isinstance(time_value, (int, float)):
-        # Handle Unix timestamp (in seconds, milliseconds, or nanoseconds)
-        if time_value > 1e18:  # Likely in nanoseconds (e.g., 1591780500000000000)
-            time_value = time_value / 1e9  # Convert to seconds
-        elif time_value > 1e12:  # Likely in milliseconds (e.g., 1591780500000)
-            time_value = time_value / 1000  # Convert to seconds
+        if time_value > 1e18:  
+            time_value = time_value / 1e9 
+        elif time_value > 1e12: 
+            time_value = time_value / 1000  
         return datetime.datetime.fromtimestamp(time_value)
     else:
         raise TypeError(f"Unsupported timestamp type: {type(time_value)}")
@@ -56,7 +72,8 @@ def process_writes(influxdb3_local, table_batches, args=None):
     time_sampling = args.get("time_sampling") if args else None
     time_bucket = time_sampling.split(" ")[-1] if time_sampling else None
     time_bucket_size = parse_time_sampling(time_bucket) if time_bucket else None
-
+    database_name = args.get("database_name") if args else None
+    analytics_list = []
     for table_batch in table_batches:
         table_name = ""
         if args and "table_name" in args:
@@ -70,7 +87,6 @@ def process_writes(influxdb3_local, table_batches, args=None):
                 influxdb3_local.info("The current data are:", current_stats)
                 has_existing_stats = True
 
-                # Ensure we get a dictionary (first entry in the list)
                 if isinstance(current_stats, list) and current_stats:
                     current_stats = current_stats[0]  # Take first element if it's a list
 
@@ -149,9 +165,21 @@ def process_writes(influxdb3_local, table_batches, args=None):
                             .float64_field("mode", mode_value if mode_value is not None else 0)\
                             .float64_field("95Percentile", percentile_95)\
                             .float64_field("count", bucket_stats["count"])
-
+                        
+                        analytics_list.append({"table_name":analytics_table,
+                                               "field_name":field_name,
+                                               "time_bucket":bucket_start.isoformat(),
+                                               "min":min_value,
+                                               "max":max_value,
+                                               "mean":mean_value,
+                                               "median":median_value,
+                                               "mode":mode_value if mode_value is not None else 0,
+                                               "95Percentile":percentile_95,
+                                               "count":bucket_stats["count"]})
+                    
                         influxdb3_local.write(analytics_line)
-
+                    analytics_data = pd.DataFrame(analytics_list)
+                    save_to_redis(analytics_data,analytics_table,database_name)
             else:
                 # Process without time buckets (original logic)
                 for row in sorted_rows:  # Process rows in chronological order
@@ -210,8 +238,21 @@ def process_writes(influxdb3_local, table_batches, args=None):
                             .float64_field("mode", mode_value if mode_value is not None else 0)\
                             .float64_field("95Percentile", percentile_95)\
                             .float64_field("count", total_count)
+                        
+                        analytics_list.append({"table_name":analytics_table,
+                                               "field_name":field_name,
+                                               "min":min_value,
+                                               "max":max_value,
+                                               "mean":mean_value,
+                                               "median":median_value,
+                                               "mode":mode_value if mode_value is not None else 0,
+                                               "95Percentile":percentile_95,
+                                               "count":bucket_stats[count]})
+                        
 
                         influxdb3_local.write(analytics_line)
+                    analytics_data = pd.DataFrame(analytics_line)
+                    save_to_redis(analytics_data,analytics_table,database_name)
 
                 else:
                     influxdb3_local.info("Table does not exist!")
@@ -234,6 +275,18 @@ def process_writes(influxdb3_local, table_batches, args=None):
                             .float64_field("95th_percentile", percentile_95)\
                             .float64_field("count", count)
 
+                        analytics_list.append({"table_name":analytics_table,
+                                               "field_name":field_name,
+                                               "min":min_value,
+                                               "max":max_value,
+                                               "mean":mean_value,
+                                               "median":median_value,
+                                               "mode":mode_value if mode_value is not None else 0,
+                                               "95Percentile":percentile_95,
+                                               "count":bucket_stats[count]})
+                        
                         influxdb3_local.write(analytics_line)
+                    analytics_data = pd.DataFrame(analytics_line)
+                    save_to_redis(analytics_data,analytics_table,database_name)
 
     influxdb3_local.info("Analytics data collected with median, mode, and 95th percentile!")
