@@ -95,12 +95,12 @@ telegraf --config telegraf.conf
 **Query Local InfluxDB 3 Instance**: Run SQL query using influxdb3 cli
 
 ```bash
-influxdb3 query --database mydb "SELECT * FROM cpu WHERE cpu = 'cpu-total' AND time >= NOW() - 5m LIMIT 2"
+influxdb3 query --database mydb "SELECT * FROM cpu WHERE cpu = 'cpu-total' AND time >= now() - interval '5 minutes' LIMIT 2"
 ```
 
 **Query Serverless Instance**: Run the same SQL query for remote InfluxDB 3 instance for example using Data Explorer UI tool within InfluxDB 3 Cloud Serverless
 ```sql
-SELECT * FROM cpu WHERE cpu = 'cpu-total' AND time >= NOW() - 5m LIMIT 2
+SELECT * FROM cpu WHERE cpu = 'cpu-total' AND time >= now() - interval '5 minutes' LIMIT 2
 ```
 
 
@@ -134,12 +134,12 @@ telegraf --config telegraf.conf
 
 **Query Local Instance (No downsampling locally)**
 ```bash
-influxdb3 query --database mydb "SELECT * FROM cpu WHERE cpu = 'cpu-total' AND time >= NOW() - 5m LIMIT 2"
+influxdb3 query --database mydb "SELECT * FROM cpu WHERE cpu = 'cpu-total' AND time >= now() - interval '5 minutes' LIMIT 2"
 ```
 
 **Query Remote InfludDB 3 Instance (Downsampled)**
 ```sql
-SELECT * FROM cpu WHERE cpu = 'cpu-total' AND time >= NOW() - 5m LIMIT 2
+SELECT * FROM cpu WHERE cpu = 'cpu-total' AND time >= now() - interval '5 minutes' LIMIT 2
 ```
 
 ## Questions/Comments
