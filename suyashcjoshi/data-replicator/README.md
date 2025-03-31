@@ -16,7 +16,6 @@ This plugin replicates **any/all data** written to an InfluxDB 3 Core/Enterprise
 
 - Custom Data Replication: Replicate all or optionally downsampled data to another InfluxDB 3 instance
 - Compressed Queue: Stores compressed data in edr_queue.jsonl.gz locally to handle connection interruptions etc.
-- Data Validation: Verifies integrity with checksums (optional).
 - Table Filtering: Replicate all or optionally specific tables.
 
 ## Setup, Run & Test
@@ -58,8 +57,7 @@ influxdb3 create trigger \
   -d mydb \
   --plugin-filename data-replicator.py \
   --trigger-spec "all_tables" \
-  --trigger-arguments "host=YOUR_HOST_URL,token=YOUR_TOKEN,database=mydb,aggregate_interval=1m,validate=true" \
-  --error-behavior retry \
+  --trigger-arguments "host=YOUR_HOST_URL,token=YOUR_TOKEN,database=mydb,aggregate_interval=1m" \
   data_replicator_trigger
 ```
 
@@ -70,7 +68,6 @@ influxdb3 create trigger \
 - host: provide host URL for your InfluxDB 3 instance where you want to replicate (e.g. Cloud Serverless URL)
 - token: provide authentication token for your InfluxDB 3 instance where you want to replicate the data (e.g Cloud Serverless API token)
 - aggregate_interval: This is used to down sample data at given interval (e.g., 1m for 1-minute averages). Omit this for no downsampling.
-- validate: Set to true for checksum validation.
 
 ### 6. Enable Trigger
 ```bash
