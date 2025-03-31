@@ -1,6 +1,6 @@
 # InfluxDB 3 Custom Data Replication Plugin
 
-This plugin replicates **any/all data** written to an InfluxDB 3 Core/Enterprise instance to a remove InfluxDB 3 bucket (e.g Cloud Serverless Instance). It features durable queuing, compression, validation, downsampling, and table filtering, and is source-agnostic, working with Telegraf, custom scripts, or any client.
+This plugin replicates **any/all data** written to an InfluxDB 3 Core/Enterprise instance to a remote InfluxDB 3 bucket (e.g Cloud Serverless Instance). It features durable queuing, compression, validation, downsampling, and table filtering, and is source-agnostic, working with Telegraf, custom scripts, or any client.
 
 ## Prerequisites
 - **InfluxDB v3 Core**: Public beta (March 29, 2025).
@@ -68,7 +68,7 @@ influxdb3 create trigger \
 - tables: Comma-separated tables to replicate (e.g., cpu,mem). Omit for all.
 - database: name of your database/bucket in your InfluxDB 3 instance where you want to replicate data (e.g. Cloud serverless URL)
 - host: provide host URL for your InfluxDB 3 instance where you want to replicate (e.g. Cloud Serverless URL)
-- token: provide authentication token for your InfluxDB 3 instance where you want to replicate the data (e.g Cloud Serverlss API token)
+- token: provide authentication token for your InfluxDB 3 instance where you want to replicate the data (e.g Cloud Serverless API token)
 - aggregate_interval: This is used to down sample data at given interval (e.g., 1m for 1-minute averages). Omit this for no downsampling.
 - validate: Set to true for checksum validation.
 
@@ -98,7 +98,7 @@ telegraf --config telegraf.conf
 influxdb3 query --database mydb "SELECT * FROM cpu WHERE cpu = 'cpu-total' AND time >= NOW() - 5m LIMIT 2"
 ```
 
-**Query Serverless Instance**: Run the same SQL query for remote InfluxDB 3 instance for example using Data Exploerer UI tool within InfluxDB 3 Cloud Serverless
+**Query Serverless Instance**: Run the same SQL query for remote InfluxDB 3 instance for example using Data Explorer UI tool within InfluxDB 3 Cloud Serverless
 ```sql
 SELECT * FROM cpu WHERE cpu = 'cpu-total' AND time >= NOW() - 5m LIMIT 2
 ```
