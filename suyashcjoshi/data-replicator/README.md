@@ -57,7 +57,7 @@ influxdb3 create trigger \
   -d mydb \
   --plugin-filename data-replicator.py \
   --trigger-spec "all_tables" \
-  --trigger-arguments "host=YOUR_HOST_URL,token=YOUR_TOKEN,database=mydb,aggregate_interval=1m" \
+  --trigger-arguments "host=YOUR_HOST_URL,token=YOUR_TOKEN,database=mydb" \
   data_replicator_trigger
 ```
 
