@@ -26,6 +26,7 @@ def process_writes(influxdb3_local, table_batches, args=None):
     - alert_title: Title for Slack notifications (default: "Anomaly Alert")
     - min_datapoints: Minimum datapoints required before analysis (default: 5)
     """
+    
     # Default configuration
     default_args = {
         "table_name": None,                 # Required
