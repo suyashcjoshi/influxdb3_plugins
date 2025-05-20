@@ -101,7 +101,7 @@ Plugins (python scripts) can depend on external python libraries that can be eas
 
 This project relies upon the following files, download/save them inside your plugin directory for next steps.
 
-### 1️⃣ [`load_peyton_data.py`](https://github.com/suyashcjoshi/influxdb3_plugins/blob/main/influxdata/Anaisdg/fbprophet/load_peyton_data.py)
+### 1️⃣ [`load_peyton_data.py`](/influxdata/Anaisdg/fbprophet/load_peyton_data.py)
 
 - HTTP-triggered plugin  
 - Downloads a public CSV of daily Wikipedia views  
