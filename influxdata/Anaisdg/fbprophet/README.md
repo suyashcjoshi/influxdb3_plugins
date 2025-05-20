@@ -56,7 +56,9 @@ Upon running the command, InfluxDB 3 should start on localhost:8181 (default) an
 
 7. **Create a Token using the CLI**
 
-Most `influxdb3` commands require an authentication token. Create an admin token using the following command and save it somewhere securely:
+Most `influxdb3` commands require an authentication token that give previleged access to the database operations. Create an admin token using the following command and save it somewhere securely as you will not be able to re-create it if lost.
+
+Create an admin token
 ```shell
 influxdb3 create token --admin
 ```
@@ -67,13 +69,10 @@ influxdb3 create token --admin
 export INFLUXDB3_AUTH_TOKEN=YOUR_ADMIN_TOKEN
 ```
 
-> [!IMPORTANT]
-> Remember, tokens give full access to InfluxDB. It is recommended to secure your token string as it is not saved within the database thus can't be retreived if lost. You can save it as a local **INFLUXDB3_AUTH_TOKEN** enviornment variable or in a keystore.
-
 8. **Create Database**: Let's create and verfify the database. It can also be created automatically when line protocol data is first written to it.
 ```shell
-influxdb3 create database my_awesome_db --token "YOUR_TOKEN_STRING"
-influxdb3 show databases --token "YOUR_TOKEN_STRING"
+influxdb3 create database my_awesome_db
+influxdb3 show databases
 ```
 
 9. **Write Sample Data**
@@ -81,7 +80,6 @@ influxdb3 show databases --token "YOUR_TOKEN_STRING"
 ```shell
 influxdb3 write \
   --database my_awesome_db \
-  --token YOUR_TOKEN_STRING \
   --precision ns \
   'cpu,host=server01,region=us-west value=0.64 1641024000000000000'
 ```
@@ -90,7 +88,6 @@ influxdb3 write \
 ```shell
 influxdb3 query \
   --database my_awesome_db \
-  --token YOUR_TOKEN_STRING \
   "SELECT * FROM cpu"
 ``` 
 
