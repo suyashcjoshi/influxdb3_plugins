@@ -61,6 +61,12 @@ Most `influxdb3` commands require an authentication token. Create an admin token
 influxdb3 create token --admin
 ```
 
+> [!TIP]
+> Set the token as an environment variable to simplify repeated CLI commands: 
+```shell
+export INFLUXDB3_AUTH_TOKEN=YOUR_ADMIN_TOKEN
+```
+
 > [!IMPORTANT]
 > Remember, tokens give full access to InfluxDB. It is recommended to secure your token string as it is not saved within the database thus can't be retreived if lost. You can save it as a local **INFLUXDB3_AUTH_TOKEN** enviornment variable or in a keystore.
 
