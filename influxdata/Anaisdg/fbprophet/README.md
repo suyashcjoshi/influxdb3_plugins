@@ -97,12 +97,11 @@ influxdb3 query \
 
 A plugin is a Python file containing a callback function with a specific signature that corresponds to the trigger type. The trigger defines and configures the plugin including providing any optional information using `--trigger-arguments` option. One or more trigger can be setup to run simultaneously either synchnorously (default behavior) or asynchnorously. Triggers can also be disabled or deleted.
 
-#### Install Python dependencies (optional)
+Plugins (python scripts) can depend on external python libraries that can be easily installed using influxdb3 cli in the existing virtual enviornment that InfluxDB3 Core provides for plugin execution.
 
-InfluxDB 3 provides a virtual enviornment for running python processing engine plugins. Those plugins are often dependent on python packages such as those from PyPy. They can be installed using influxdb3 cli for example `influxdb3 install package pandas --token YOUR_TOKEN_STRING` to install pandas package.
+This project relies upon the following files, download/save them inside your plugin directory for next steps.
 
-
-### 1️⃣ `load_peyton_data.py`
+### 1️⃣ [`load_peyton_data.py`](https://github.com/suyashcjoshi/influxdb3_plugins/blob/main/influxdata/Anaisdg/fbprophet/load_peyton_data.py)
 
 - HTTP-triggered plugin  
 - Downloads a public CSV of daily Wikipedia views  
@@ -110,7 +109,7 @@ InfluxDB 3 provides a virtual enviornment for running python processing engine p
 
 Trigger this manually via `curl` or any HTTP request.
 
-### 2️⃣ `forecast_peyton.py`
+### 2️⃣ [`forecast_peyton.py`](/load_peyton_data.py)
 
 - Scheduled plugin (runs daily or on your schedule)  
 - Reads data from `peyton_views`  
@@ -118,7 +117,7 @@ Trigger this manually via `curl` or any HTTP request.
 - Forecasts 365 days into the future  
 - Writes summary forecast results to `prophet_forecast`  
 
-### 3️⃣ `plot_forecast_http.py`
+### 3️⃣ [`plot_forecast_http.py`](https://github.com/suyashcjoshi/influxdb3_plugins/blob/main/influxdata/Anaisdg/fbprophet/plot_forecast_http.py)
 - HTTP-triggered plugin  
 - Reads data from both `peyton_views` and `prophet_forecast`  
 - Creates an interactive Plotly chart combining historical data and forecast  
