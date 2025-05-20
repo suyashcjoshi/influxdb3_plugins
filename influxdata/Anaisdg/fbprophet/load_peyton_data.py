@@ -1,6 +1,7 @@
 import pandas as pd
 from datetime import datetime
 import json
+
 def process_request(influxdb3_local, query_parameters, request_headers, request_body, args=None):
     url = "https://raw.githubusercontent.com/facebook/prophet/main/examples/example_wp_log_peyton_manning.csv"
     df = pd.read_csv(url)
