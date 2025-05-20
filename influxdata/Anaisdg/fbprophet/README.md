@@ -109,7 +109,7 @@ This project relies upon the following files, download/save them inside your plu
 
 Trigger this manually via `curl` or any HTTP request.
 
-### 2️⃣ [`forecast_peyton.py`](/load_peyton_data.py)
+### 2️⃣ [`forecast_peyton.py`](/influxdata/Anaisdg/fbprophet/load_peyton_data.py)
 
 - Scheduled plugin (runs daily or on your schedule)  
 - Reads data from `peyton_views`  
@@ -117,7 +117,7 @@ Trigger this manually via `curl` or any HTTP request.
 - Forecasts 365 days into the future  
 - Writes summary forecast results to `prophet_forecast`  
 
-### 3️⃣ [`plot_forecast_http.py`](https://github.com/suyashcjoshi/influxdb3_plugins/blob/main/influxdata/Anaisdg/fbprophet/plot_forecast_http.py)
+### 3️⃣ [`plot_forecast_http.py`](/influxdata/Anaisdg/fbprophet/plot_forecast_http.py)
 - HTTP-triggered plugin  
 - Reads data from both `peyton_views` and `prophet_forecast`  
 - Creates an interactive Plotly chart combining historical data and forecast  
