@@ -49,7 +49,7 @@ Arguments:
 influxdb3 serve \
   --node-id node0 \
   --object-store file \
-  --data-dir ~/.influxdb/data
+  --data-dir ~/.influxdb/data \
   --plugin-dir ~/influxdb3-plugins
 ```
 Upon running the command, InfluxDB 3 should start on localhost:8181 (default) and start printing logs in the terminal window without any error.
@@ -99,7 +99,7 @@ A plugin is a Python file containing a callback function with a specific signatu
 
 Plugins (python scripts) can depend on external python libraries that can be easily installed using influxdb3 cli in the existing virtual enviornment that InfluxDB3 Core provides for plugin execution.
 
-This project relies upon the following files, download/save them inside your plugin directory for next steps.
+This project relies upon the following files, download them locally.
 
 ### 1️⃣ [`load_peyton_data.py`](/influxdata/Anaisdg/fbprophet/load_peyton_data.py)
 
@@ -140,8 +140,8 @@ Create a database:
 ```bash
 influxdb3 create database prophet
 ```
-### ✅ Step 2: Save the Plugins
-Place both plugins in your configured --plugin-dir:
+### ✅ Step 2: Save the Plugins in plugins directory
+Place the following plugins in your configured --plugin-dir:
 - load_peyton_data.py
 - forecast_peyton.py
 - plot_forecast_http.py
