@@ -70,7 +70,7 @@ influxdb3 create database my_awesome_db --token "YOUR_TOKEN_STRING"
 influxdb3 show databases --token "YOUR_TOKEN_STRING"
 ```
 
-9. **Write sample data**:
+9. **Write Sample Data**
     
 ```shell
 influxdb3 write \
@@ -80,7 +80,7 @@ influxdb3 write \
   'cpu,host=server01,region=us-west value=0.64 1641024000000000000'
 ```
 
-6. **Query the data**:
+10. **Query Data**
 ```shell
 influxdb3 query \
   --database my_awesome_db \
