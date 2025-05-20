@@ -109,7 +109,7 @@ This project relies upon the following files, download/save them inside your plu
 
 Trigger this manually via `curl` or any HTTP request.
 
-### 2️⃣ [`forecast_peyton.py`](/influxdata/Anaisdg/fbprophet/load_peyton_data.py)
+### 2️⃣ [`forecast_peyton.py`](/influxdata/Anaisdg/fbprophet/forecast_peyton.py)
 
 - Scheduled plugin (runs daily or on your schedule)  
 - Reads data from `peyton_views`  
